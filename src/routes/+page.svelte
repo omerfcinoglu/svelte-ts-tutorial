@@ -1,12 +1,15 @@
 <script lang="ts">
-  import { fly, fade } from "svelte/transition";
-  import { cubicOut } from "svelte/easing";
+  import { fade } from "svelte/transition";
+  import Page1 from "$lib/pages/Page1.svelte";
+  import Page2 from "$lib/pages/Page2.svelte";
+  import Page3 from "$lib/pages/Page3.svelte";
+  import Page4 from "$lib/pages/Page4.svelte";
 
   let currentPage = 0;
   const totalPages = 4;
 
   let isAnimating = false;
-  const animationDuration = 1200; // ms
+  const animationDuration = 1200;
 
   function handleWheel(event: WheelEvent) {
     if (isAnimating) return;
@@ -21,76 +24,24 @@
   function goToPage(page: number) {
     isAnimating = true;
     currentPage = page;
-
-    setTimeout(() => {
-      isAnimating = false;
-    }, animationDuration);
+    setTimeout(() => (isAnimating = false), animationDuration);
   }
-
-  const titles = ["Page 1", "Page 2", "Page 3", "Page 4"];
 </script>
 
 <div class="container" on:wheel={handleWheel}>
-  {#if currentPage === 0}
-    <div class="page">
-      <div class="shapes">
-        <div class="square" in:fly={{ y: -50, duration: 600 }}></div>
-        <div
-          class="triangle"
-          in:fly={{ y: 50, duration: 600, delay: 200 }}
-        ></div>
-        <div class="circle" in:fly={{ x: 50, duration: 600, delay: 400 }}></div>
-      </div>
-      <h1 in:fade={{ duration: 1000, easing: cubicOut }}>
-        {titles[0]}
-      </h1>
+  {#key currentPage}
+    <div transition:fade={{ duration: 800 }}>
+      {#if currentPage === 0}
+        <Page1 />
+      {:else if currentPage === 1}
+        <Page2 />
+      {:else if currentPage === 2}
+        <Page3 />
+      {:else if currentPage === 3}
+        <Page4 />
+      {/if}
     </div>
-  {/if}
-
-  {#if currentPage === 1}
-    <div class="page">
-      <div class="shapes">
-        <div class="circle" in:fly={{ x: -50, duration: 600 }}></div>
-        <div
-          class="square"
-          in:fly={{ y: -50, duration: 600, delay: 200 }}
-        ></div>
-        <div
-          class="triangle"
-          in:fly={{ y: 50, duration: 600, delay: 400 }}
-        ></div>
-      </div>
-      <h1 in:fade={{ duration: 1000 }}>{titles[1]}</h1>
-    </div>
-  {/if}
-
-  {#if currentPage === 2}
-    <div class="page">
-      <div class="shapes">
-        <div class="triangle" in:fly={{ y: -50, duration: 600 }}></div>
-        <div class="circle" in:fly={{ x: 50, duration: 600, delay: 200 }}></div>
-        <div class="square" in:fly={{ y: 50, duration: 600, delay: 400 }}></div>
-      </div>
-      <h1 in:fade={{ duration: 1000 }}>{titles[2]}</h1>
-    </div>
-  {/if}
-
-  {#if currentPage === 3}
-    <div class="page">
-      <div class="shapes">
-        <div class="square" in:fly={{ y: 50, duration: 600 }}></div>
-        <div
-          class="triangle"
-          in:fly={{ x: -50, duration: 600, delay: 200 }}
-        ></div>
-        <div
-          class="circle"
-          in:fly={{ y: -50, duration: 600, delay: 400 }}
-        ></div>
-      </div>
-      <h1 in:fade={{ duration: 1000 }}>{titles[3]}</h1>
-    </div>
-  {/if}
+  {/key}
 </div>
 
 <style>
@@ -98,51 +49,6 @@
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #111;
-    color: white;
     font-family: sans-serif;
-  }
-
-  .page {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .shapes {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 30px;
-  }
-
-  .square {
-    width: 40px;
-    height: 40px;
-    background: crimson;
-  }
-  .triangle {
-    width: 0;
-    height: 0;
-    border-left: 25px solid transparent;
-    border-right: 25px solid transparent;
-    border-bottom: 40px solid dodgerblue;
-  }
-  .circle {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: limegreen;
-  }
-
-  h1 {
-    font-size: 3rem;
-    font-weight: bold;
-    margin: 0;
   }
 </style>

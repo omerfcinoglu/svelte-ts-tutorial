@@ -1,16 +1,24 @@
 <script lang="ts">
-  import { fly, fade } from "svelte/transition";
+  import { fade } from "svelte/transition";
 
-  const hearts = Array.from({ length: 6 }, (_, i) => i);
+  const hearts = Array.from({ length: 9 }, (_, i) => ({
+    id: i,
+    left: 40 + Math.random() * 20,
+    drift: (Math.random() - 0.5) * 250,
+  }));
 </script>
 
 <div class="page">
-  <h1 in:fade={{ duration: 1000 }}>👋 Greetings, welcome!</h1>
+  <h1 transition:fade={{ duration: 1000 }}>👋 Greetings!</h1>
 
-  {#each hearts as h, i}
+  {#each hearts as heart, i}
     <div
       class="heart"
-      style="left: {20 + i * 15}%; animation-delay: {i * 0.6}s"
+      style="
+        left: {heart.left}%;
+        animation-delay: {i * 0.01}s;
+        --drift: {heart.drift}px;
+      "
     >
       ❤️
     </div>
@@ -26,6 +34,8 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    background: #111;
+    color: white;
   }
 
   h1 {
@@ -37,22 +47,21 @@
   .heart {
     position: absolute;
     bottom: 0;
-    font-size: 2rem;
+    font-size: 5rem;
     color: crimson;
-    animation: floatUp 4s linear forwards;
-    opacity: 0.8;
+    animation: floatUp 4s ease-out forwards;
   }
 
   @keyframes floatUp {
     0% {
-      transform: translateY(0);
-      opacity: 0.9;
+      transform: translateY(0) translateX(0);
+      opacity: 1;
     }
     50% {
-      opacity: 0.6;
+      opacity: 0.7;
     }
     100% {
-      transform: translateY(-100vh);
+      transform: translateY(-100vh) translateX(var(--drift));
       opacity: 0;
     }
   }
