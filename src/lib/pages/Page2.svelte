@@ -1,14 +1,34 @@
 <script lang="ts">
   import { fly } from "svelte/transition";
+  let active = false;
+
+  function inView(node: HTMLElement) {
+    const io = new IntersectionObserver(
+      ([e]) => {
+        active = e.isIntersecting && e.intersectionRatio >= 0.6;
+      },
+      { threshold: [0, 0.25, 0.5, 0.6, 0.75, 1] }
+    );
+    io.observe(node);
+    return {
+      destroy() {
+        io.disconnect();
+      },
+    };
+  }
 </script>
 
-<div class="page">
-  <div class="card" transition:fly={{ y: 80, duration: 800 }}>
-    <h2>Welcome to our wedding!</h2>
-  </div>
+<div class="page" use:inView>
+  {#key active}
+    {#if active}
+      <div class="card" transition:fly={{ y: 80, duration: 800 }}>
+        <h2>Welcome to our wedding!</h2>
+      </div>
 
-  <div class="circle left"></div>
-  <div class="circle right"></div>
+      <div class="circle left"></div>
+      <div class="circle right"></div>
+    {/if}
+  {/key}
 </div>
 
 <style>
@@ -31,6 +51,10 @@
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     z-index: 2;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   h2 {
@@ -47,30 +71,33 @@
     top: 50%;
     transform: translateY(-50%);
     z-index: 1;
-    animation: moveIn 1.5s ease forwards;
-    opacity: 0.8;
+    opacity: 0.9;
+    animation-duration: 1.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
   }
 
-  .circle.left {
-    left: -120px;
+  .left {
+    top: 40%;
+    left: -1vw;
+    animation-name: moveInLeft;
     animation-delay: 0.2s;
   }
-
-  .circle.right {
-    right: -120px;
-    animation-delay: 0.4s;
+  .right {
+    top: 60%;
+    right: -1vw;
     animation-name: moveInRight;
+    animation-delay: 0.4s;
   }
 
-  @keyframes moveIn {
+  @keyframes moveInLeft {
     to {
-      transform: translateY(-50%) translateX(100px);
+      transform: translateY(-50%) translateX(20vw);
     }
   }
-
   @keyframes moveInRight {
     to {
-      transform: translateY(-50%) translateX(-100px);
+      transform: translateY(-50%) translateX(-20vw);
     }
   }
 </style>

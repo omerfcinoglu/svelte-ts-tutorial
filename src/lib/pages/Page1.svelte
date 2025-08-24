@@ -1,4 +1,21 @@
 <script lang="ts">
+  let active = false;
+
+  function inView(node: HTMLElement) {
+    const io = new IntersectionObserver(
+      ([e]) => {
+        active = e.isIntersecting && e.intersectionRatio >= 0.6;
+      },
+      { threshold: [0, 0.25, 0.5, 0.6, 0.75, 1] }
+    );
+    io.observe(node);
+    return {
+      destroy() {
+        io.disconnect();
+      },
+    };
+  }
+
   const hearts = Array.from({ length: 9 }, (_, i) => ({
     id: i,
     left: 40 + Math.random() * 20,
@@ -6,21 +23,25 @@
   }));
 </script>
 
-<div class="page1">
-  <h1 class="title">👋 Greetings, welcome!</h1>
+<div class="page1" use:inView>
+  {#key active}
+    {#if active}
+      <h1 class="title">👋 Greetings</h1>
 
-  {#each hearts as heart, i}
-    <div
-      class="heart"
-      style="
-        left: {heart.left}%;
-        animation-delay: {i * 0.01}s;
-        --drift: {heart.drift}px;
-      "
-    >
-      ❤️
-    </div>
-  {/each}
+      {#each hearts as heart, i}
+        <div
+          class="heart"
+          style="
+            left: {heart.left}%;
+            animation-delay: {i * 0.12}s;
+            --drift: {heart.drift}px;
+          "
+        >
+          ❤️
+        </div>
+      {/each}
+    {/if}
+  {/key}
 </div>
 
 <style>
