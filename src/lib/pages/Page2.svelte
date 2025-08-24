@@ -42,6 +42,27 @@
     background: #222;
     color: white;
     overflow: hidden;
+    background: hsla(155, 23%, 71%, 1);
+
+    background: linear-gradient(
+      90deg,
+      hsla(155, 23%, 71%, 1) 0%,
+      hsla(302, 17%, 32%, 1) 100%
+    );
+
+    background: -moz-linear-gradient(
+      90deg,
+      hsla(155, 23%, 71%, 1) 0%,
+      hsla(302, 17%, 32%, 1) 100%
+    );
+
+    background: -webkit-linear-gradient(
+      90deg,
+      hsla(155, 23%, 71%, 1) 0%,
+      hsla(302, 17%, 32%, 1) 100%
+    );
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A4C6B8", endColorstr="#5E435D", GradientType=1 );
   }
 
   .card {

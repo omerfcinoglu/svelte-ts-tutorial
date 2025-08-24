@@ -52,6 +52,27 @@
     align-items: center;
     justify-content: center;
     position: relative;
+    background: hsla(302, 17%, 32%, 1);
+
+    background: linear-gradient(
+      90deg,
+      hsla(302, 17%, 32%, 1) 0%,
+      hsla(155, 23%, 71%, 1) 100%
+    );
+
+    background: -moz-linear-gradient(
+      90deg,
+      hsla(302, 17%, 32%, 1) 0%,
+      hsla(155, 23%, 71%, 1) 100%
+    );
+
+    background: -webkit-linear-gradient(
+      90deg,
+      hsla(302, 17%, 32%, 1) 0%,
+      hsla(155, 23%, 71%, 1) 100%
+    );
+
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#5E435D", endColorstr="#A4C6B8", GradientType=1 );
   }
   .title {
     font-size: 3rem;
