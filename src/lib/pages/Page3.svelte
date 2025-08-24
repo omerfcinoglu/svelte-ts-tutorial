@@ -23,10 +23,16 @@
   const features = [
     {
       title: "Smooth Transitions",
-      text: "Fly, fade, keyframes ve parallax birleşimi.",
+      text: "A combination of fly, fade, keyframes, and parallax.",
     },
-    { title: "Interactive Cards", text: "Hover ile ince ölçek ve gölge." },
-    { title: "Live Metrics", text: "Girişte sayan sayaç ve ilerleme." },
+    {
+      title: "Interactive Cards",
+      text: "Subtle scaling and shadow effects on hover.",
+    },
+    {
+      title: "Live Metrics",
+      text: "Counters and progress bars triggered on entry.",
+    },
   ];
 </script>
 
@@ -143,6 +149,7 @@
 
   .hero {
     text-align: center;
+    margin-top: 5vh;
     margin-bottom: 2vh;
   }
   .title {

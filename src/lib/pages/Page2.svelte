@@ -72,7 +72,8 @@
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
     z-index: 2;
-    height: 150px;
+    height: 10vh;
+    width: 50vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -113,12 +114,12 @@
 
   @keyframes moveInLeft {
     to {
-      transform: translateY(-50%) translateX(20vw);
+      transform: translateY(-50%) translateX(35vw);
     }
   }
   @keyframes moveInRight {
     to {
-      transform: translateY(-50%) translateX(-20vw);
+      transform: translateY(-50%) translateX(-35vw);
     }
   }
 </style>
