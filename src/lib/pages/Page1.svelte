@@ -1,6 +1,4 @@
 <script lang="ts">
-  import { fade } from "svelte/transition";
-
   const hearts = Array.from({ length: 9 }, (_, i) => ({
     id: i,
     left: 40 + Math.random() * 20,
@@ -8,8 +6,8 @@
   }));
 </script>
 
-<div class="page">
-  <h1 transition:fade={{ duration: 1000 }}>👋 Greetings!</h1>
+<div class="page1">
+  <h1 class="title">👋 Greetings, welcome!</h1>
 
   {#each hearts as heart, i}
     <div
@@ -26,32 +24,38 @@
 </div>
 
 <style>
-  .page {
+  .page1 {
     width: 100vw;
     height: 100vh;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
-    background: #111;
-    color: white;
   }
-
-  h1 {
+  .title {
     font-size: 3rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
+    font-weight: 700;
+    margin: 0 0 2rem 0;
+    animation: titleIn 900ms ease-out both;
+  }
+  @keyframes titleIn {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   .heart {
     position: absolute;
     bottom: 0;
-    font-size: 5rem;
+    font-size: 2rem;
     color: crimson;
     animation: floatUp 4s ease-out forwards;
   }
-
   @keyframes floatUp {
     0% {
       transform: translateY(0) translateX(0);
